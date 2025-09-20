@@ -4,7 +4,12 @@
       <h4>{{ pageTitle }}</h4>
     </div>
     <div class="cards-wrapper">
-      <div v-for="(item, index) in movies" :key="index" class="card1">
+      <div
+        v-for="(item, index) in movies"
+        :key="index"
+        class="card1"
+        @click="goToDetails(item.id)"
+      >
         <div class="card-img">
           <img :src="`https://image.tmdb.org/t/p/w500${item.poster_path}`" />
         </div>
@@ -30,6 +35,7 @@
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { fetchFromTMDB } from "@/api/api.js";
+import router from "@/router";
 
 const route = useRoute();
 const movies = ref([]);
@@ -41,11 +47,25 @@ onMounted(async () => {
   const data = await fetchFromTMDB(endpoint);
   const results = data.results || [];
   const repet = [...results];
+
   while (repet.length < 40) {
     repet.push(...results);
   }
   movies.value = repet.slice(0, 40);
+
+  const data2 = await fetchFromTMDB(props.apiEndpoint);
+  movies.value = data.results;
+
+  await nextTick();
+  checkScroll();
+
+  slider.value.addEventListener("scroll", checkScroll);
+  updateCardsToScroll();
+  window.addEventListener("resize", updateCardsToScroll);
 });
+function goToDetails(id) {
+  router.push({ name: "DetailsPage", params: { id } });
+}
 </script>
 
 <style scoped>
