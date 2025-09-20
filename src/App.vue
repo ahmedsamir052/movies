@@ -1,31 +1,3 @@
-<!-- <script setup>
-import { RouterLink, RouterView } from "vue-router";
-import Footer from "./components/Footer.vue";
-import Sidebar from "./components/Sidebar.vue";
-</script>
-
-<template>
-  <Sidebar />
-  <div class="content">
-    <RouterView />
-    <Footer />
-  </div>
-</template>
-
-<style scoped>
-main {
-  min-height: 80vh;
-}
-.content{
-  margin-left: 6.25%;
-}
-@media screen and (max-width: 1240px) {
-  .content{
-    margin-left: 0;
-  }
-}
-</style> -->
-
 <script setup>
 import { ref } from "vue";
 import { RouterView } from "vue-router";
